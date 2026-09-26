@@ -1,33 +1,34 @@
+// Online C compiler (editor)
+// Write and run C online using this editor.
+
 #include <stdio.h>
-#include <stdlib.h> //library for malloc
-struct node{//creating a structure
-    int data; //initialize data as an integer
-    struct node *next; // initialize next
+#include <stdlib.h>
+struct node {
+    int data;
+    struct node *next;
 };
-void insert(struct node **head,int value){//formula for insert
+void insert(struct node **head,int value){
     struct node *newNode;
     newNode = malloc(sizeof(struct node));
-    newNode->data = value;
-    newNode->next = *head;
+    newNode->data= value;
+    newNode->next= *head;
     *head = newNode;
-    
 }
-void delete(struct node **head){//formula for delete
+void deleteNode(struct node **head){
     struct node *temp = *head;
     *head = temp->next;
+    free(temp);
 }
 int main() {
     struct node *head = NULL;
-    struct node *temp;//for traversal
+    struct node *temp;
     insert(&head,20);
     insert(&head,30);
+    deleteNode(&head);
     insert(&head,40);
-    insert(&head,50);
-
-    delete(&head);
-    temp = head;//for traversal
-    while(temp != NULL){//traversal loop
-        printf("%d\n",temp->data);
+    temp = head;
+    while(temp!=NULL){
+        printf("%d \n",temp->data);
         temp = temp->next;
     }
     return 0;
