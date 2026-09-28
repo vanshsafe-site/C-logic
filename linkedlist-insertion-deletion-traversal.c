@@ -1,35 +1,50 @@
-// Online C compiler (editor)
-// Write and run C online using this editor.
-
 #include <stdio.h>
 #include <stdlib.h>
-struct node {
+struct Node{
     int data;
-    struct node *next;
+    struct Node * next;
 };
-void insert(struct node **head,int value){
-    struct node *newNode;
-    newNode = malloc(sizeof(struct node));
-    newNode->data= value;
-    newNode->next= *head;
-    *head = newNode;
+void traversal(struct Node * ptr){
+    while(ptr != 0){
+    printf("%d\n",ptr->data);   
+    ptr = ptr->next;   
+    }
 }
-void deleteNode(struct node **head){
-    struct node *temp = *head;
-    *head = temp->next;
-    free(temp);
+struct Node * insertAtHead(struct Node * head,int data){
+    struct Node * ptr = (struct Node *)malloc (sizeof(struct Node*));
+    ptr->next = head;
+    ptr->data = data;
+    return ptr;
+    
+}
+struct Node * DeleteNode(struct Node * head){
+    struct Node * ptr = head;
+    head = head->next;
+    free(ptr);
+    return head;
 }
 int main() {
-    struct node *head = NULL;
-    struct node *temp;
-    insert(&head,20);
-    insert(&head,30);
-    deleteNode(&head);
-    insert(&head,40);
-    temp = head;
-    while(temp!=NULL){
-        printf("%d \n",temp->data);
-        temp = temp->next;
-    }
+    struct Node * head;
+    struct Node * second;
+    struct Node * third;
+    //allocating memory for nodes
+    head = (struct Node *)malloc(sizeof(struct Node));
+    second = (struct Node *)malloc(sizeof(struct Node));
+    third = (struct Node *)malloc(sizeof(struct Node));
+
+    head->data = 7;
+    head->next = second;
+
+    second->data = 11;
+    second->next = third;
+
+    third->data = 14;
+    third->next = NULL;
+    traversal(head);
+    head = insertAtHead(head,20);
+    traversal(head);
+    head = DeleteNode(head);
+    head = DeleteNode(head);
+    traversal(head);
     return 0;
 }
